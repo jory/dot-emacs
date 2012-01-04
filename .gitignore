@@ -1,0 +1,12 @@
+auto-save-list/
+backups/
+elpa/
+
+.erc-auth
+.smex-items
+Consolas-theme.el
+custom.el
+/places
+/server/server
+/url/cookies
+/web-vcs-log.org
