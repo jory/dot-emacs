@@ -30,7 +30,8 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(if (file-readable-p custom-file)
+    (load custom-file))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -38,8 +39,12 @@
 ;; Generic customizations
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load-theme 'zenburn)
-(load-theme 'Consolas)
+(defun safe-load (theme)
+  (if (find theme (custom-available-themes))
+      (load-theme theme t)))
+
+(safe-load 'zenburn)
+(safe-load 'Consolas)
 
 (winner-mode t)
 
@@ -53,7 +58,10 @@
 
 (require 'bitlbee)
 
-(load "~/.emacs.d/.erc-auth")
+(setq erc-auth "~/.emacs.d/.erc-auth")
+(if (file-readable-p erc-auth)
+    (load erc-auth))
+
 
 (defun bitlbee-identify ()
   "If we're on the bitlbee server, send the identify command to the &bitlbee channel."
@@ -101,7 +109,7 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (set-default 'tab-width 4)
-(set-default 'indent-tabs-mode t)
+(set-default 'indent-tabs-mode nil)
 (setq longlines-auto-wrap t)
 (column-number-mode)
 
