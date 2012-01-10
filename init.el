@@ -12,6 +12,8 @@
 
 (defvar my-packages '(starter-kit starter-kit-bindings starter-kit-eshell
                                   starter-kit-js starter-kit-lisp
+								  yaml-mode sass-mode
+                                  rainbow-delimiters rainbow-mode
                                   fill-column-indicator))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -62,7 +64,6 @@
 (if (file-readable-p erc-auth)
     (load erc-auth))
 
-
 (defun bitlbee-identify ()
   "If we're on the bitlbee server, send the identify command to the &bitlbee channel."
   (when (and (string= "localhost" erc-session-server)
@@ -83,9 +84,10 @@
 
 (defun js-mode-options ()
   "These are *my* js-mode options."
-  (setq js-indent-level 4))
+  (setq js-indent-level 2))
 
 (add-hook 'js-mode-hook 'js-mode-options)
+
 
 (defun org-mode-options ()
   "These are *my* org-mode options."
@@ -120,6 +122,14 @@
 ;; HACK: Needed to suppress all the Compile-log junk. Should be removed.
 (setq warning-minimum-level :error)
 
+(add-to-list 'auto-mode-alist '("\\Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+
+(add-hook 'css-mode-hook 'rainbow-mode)
+
+(add-hook 'sass-mode-hook 'rainbow-mode)
+(add-hook 'sass-mode-hook 'rainbow-delimiters-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Defuns
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -148,3 +158,16 @@
 
 (global-set-key (kbd "C-c p") 'python-server)
 (put 'ido-exit-minibuffer 'disabled nil)
+
+(when (eq system-type 'darwin) ;; mac specific settings
+  (setq mac-command-key-is-meta t)
+  (setq mac-command-modifier 'meta)
+
+  ;; OS X's ls command doesn't support the --dired flag, so use the
+  ;; built-in one instead. This is the default behaviour on Windows.
+  ;;     See: dired-use-ls-dired
+  (setq ls-lisp-use-insert-directory-program nil)
+  (require 'ls-lisp))
+
+(set-frame-height (selected-frame) 80)
+(set-frame-width (selected-frame) 176)
