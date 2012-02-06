@@ -115,20 +115,27 @@
 (setq longlines-auto-wrap t)
 (column-number-mode)
 
-(load "~/.emacs.d/vendor/nxhtml/autostart.el")
-(setq mumamo-chunk-coloring 42)
-(add-to-list 'auto-mode-alist '("\\.html$" . html-mumamo-mode))
+;; (load "~/.emacs.d/vendor/nxhtml/autostart.el")
+;; (setq mumamo-chunk-coloring 42)
+;; (add-to-list 'auto-mode-alist '("\\.html$" . html-mumamo-mode))
 
 ;; HACK: Needed to suppress all the Compile-log junk. Should be removed.
 (setq warning-minimum-level :error)
 
 (add-to-list 'auto-mode-alist '("\\Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\thor$" . ruby-mode))
+
 
 (add-hook 'css-mode-hook 'rainbow-mode)
 
 (add-hook 'sass-mode-hook 'rainbow-mode)
 (add-hook 'sass-mode-hook 'rainbow-delimiters-mode)
+
+(add-hook 'haml-mode-hook 'rainbow-delimiters-mode)
+
+(add-hook 'js-mode-hook 'flymake-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Defuns
@@ -169,5 +176,65 @@
   (setq ls-lisp-use-insert-directory-program nil)
   (require 'ls-lisp))
 
-(set-frame-height (selected-frame) 80)
-(set-frame-width (selected-frame) 176)
+(set-frame-height (selected-frame) 86)
+(set-frame-width (selected-frame) 118)
+
+(add-to-list 'desktop-path "~/.emacs.d/desktops")
+(desktop-save-mode 1)
+
+;; TODO: Figure out if this loads if I put it before the flymake
+;; stuff, since it doesn't seem to be loading if it goes afterwards.
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auto-revert-tail-mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FLYMAKE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq flymake-log-level 3)
+
+(global-set-key (kbd "C-c C-e") 'flymake-display-err-menu-for-current-line)
+(global-set-key (kbd "C-c C-n") 'flymake-goto-next-error)
+(global-set-key (kbd "C-c C-p") 'flymake-goto-prev-error)
+
+(require 'flymake-jshint)
+(setq jshint-configuration-path nil)
+
+(require 'flymake-ruby)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+
+(require 'flymake-sass)
+(add-hook 'sass-mode-hook 'flymake-sass-load)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; An idea from https://gist.github.com/1688384
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun ruby-generate-tags()
+  (interactive)
+  (let ((root (ffip-project-root)))
+    (let ((my-tags-file (concat root "TAGS")))
+      (message "Regenerating TAGS file: %s" my-tags-file)
+      (if (file-exists-p my-tags-file)
+          (delete-file my-tags-file))
+      (shell-command
+       (format "find %s -iname '*.rb' | grep -v db | xargs /usr/local/bin/ctags -a -e -f %s"
+               root my-tags-file))
+      (if (get-file-buffer my-tags-file)
+          (kill-buffer (get-file-buffer my-tags-file)))
+      (visit-tags-table my-tags-file))))
+
+
+(mouse-wheel-mode 0)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Added by Emacs automatically
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(put 'narrow-to-region 'disabled nil)
+
+

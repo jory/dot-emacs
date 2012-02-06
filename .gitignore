@@ -11,3 +11,5 @@ custom.el
 /url/cookies
 /web-vcs-log.org
 /eshell/
+/tramp
+/vendor/nxhtml/etc/schema/xhtml-loader.rnc
