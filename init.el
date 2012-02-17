@@ -54,6 +54,12 @@
 
 (server-start)
 
+(defun eshell/clear ()
+  "04Dec2001 - sailor, to clear the eshell buffer."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IRC
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -128,7 +134,16 @@
 (add-to-list 'auto-mode-alist '("\\thor$" . ruby-mode))
 
 
+;; TODO: Highlighting the TODO keyword in CSS mode.
+(defun css-options ()
+  "My CSS options"
+  (setq css-indent-offset 2))
+
+(add-hook 'css-mode-hook 'css-options)
 (add-hook 'css-mode-hook 'rainbow-mode)
+
+;; TODO: Add functionality to paredit mode for CSS. Auto {}.
+;; (add-hook 'css-mode-hook 'paredit-mode)
 
 (add-hook 'sass-mode-hook 'rainbow-mode)
 (add-hook 'sass-mode-hook 'rainbow-delimiters-mode)
@@ -136,6 +151,7 @@
 (add-hook 'haml-mode-hook 'rainbow-delimiters-mode)
 
 (add-hook 'js-mode-hook 'flymake-mode)
+(remove-hook 'js-mode-hook 'auto-fill-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Defuns
@@ -231,10 +247,15 @@
 
 
 (mouse-wheel-mode 0)
+
+;; TODO: Figure out why it doesn't get here on normal start-up.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Added by Emacs automatically
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; TODO: Add something for recent files.
+
 (put 'narrow-to-region 'disabled nil)
+
 
 
