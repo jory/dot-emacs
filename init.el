@@ -29,6 +29,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/vendor")
 (add-to-list 'load-path "~/.emacs.d/vendor/nxhtml")
+(add-to-list 'load-path "~/.emacs.d/vendor/yaml")
 (add-to-list 'load-path "~/.emacs.d/themes")
 
 (setq custom-file "~/.emacs.d/custom.el")
@@ -84,6 +85,9 @@
                                    (erc :server "localhost" :port 6667
                                         :nick "jory")))
 
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hooks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -120,6 +124,8 @@
 (set-default 'indent-tabs-mode nil)
 (setq longlines-auto-wrap t)
 (column-number-mode)
+
+(set-default 'compilation-scroll-output 'first-error)
 
 ;; (load "~/.emacs.d/vendor/nxhtml/autostart.el")
 ;; (setq mumamo-chunk-coloring 42)
@@ -180,7 +186,6 @@
    (async-shell-command "python -m http.server")))
 
 (global-set-key (kbd "C-c p") 'python-server)
-(put 'ido-exit-minibuffer 'disabled nil)
 
 (when (eq system-type 'darwin) ;; mac specific settings
   (setq mac-command-key-is-meta t)
@@ -248,6 +253,8 @@
 
 (mouse-wheel-mode 0)
 
+(setq uniquify-min-dir-content 1)
+
 ;; TODO: Figure out why it doesn't get here on normal start-up.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Added by Emacs automatically
@@ -255,7 +262,8 @@
 
 ;; TODO: Add something for recent files.
 
+
+
+
+(put 'ido-exit-minibuffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
-
-
-
