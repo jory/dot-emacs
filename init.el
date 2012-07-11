@@ -218,8 +218,8 @@
 ;; (set-frame-height (selected-frame) 86)
 ;; (set-frame-width (selected-frame) 118)
 
-(add-to-list 'desktop-path "~/.emacs.d/desktops")
-(desktop-save-mode 1)
+;; (add-to-list 'desktop-path "~/.emacs.d/desktops")
+;; (desktop-save-mode 1)
 
 ;; TODO: Figure out if this loads if I put it before the flymake
 ;; stuff, since it doesn't seem to be loading if it goes afterwards.
@@ -272,6 +272,8 @@
 (mouse-wheel-mode 0)
 
 (setq uniquify-min-dir-content 1)
+
+(xterm-mouse-mode)
 
 ;; TODO: Figure out why it doesn't get here on normal start-up.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
