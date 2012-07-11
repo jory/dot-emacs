@@ -4,6 +4,8 @@
 
 (require 'package)
 (add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -12,7 +14,7 @@
 
 (defvar my-packages '(starter-kit starter-kit-bindings starter-kit-eshell
                                   starter-kit-js starter-kit-lisp
-								  yaml-mode sass-mode
+                                  yaml-mode sass-mode
                                   rainbow-delimiters rainbow-mode
                                   fill-column-indicator))
 
@@ -38,16 +40,32 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
+(global-set-key (kbd "<select>") 'windmove-up)
+
+(require 'pbcopy)
+(turn-on-pbcopy)
+
+(load-theme 'zenburn)
+
+(global-set-key (kbd "\C-xf") 'find-file-in-project)
+
+(add-hook 'dired-mode-hook 'ensure-buffer-name-ends-in-slash)
+(defun ensure-buffer-name-ends-in-slash ()
+  "change buffer name to end with slash"
+  (let ((name (buffer-name)))
+    (if (not (string-match "/$" name))
+        (rename-buffer (concat "/" name "/") t))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Generic customizations
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun safe-load (theme)
-  (if (find theme (custom-available-themes))
-      (load-theme theme t)))
+;; (defun safe-load (theme)
+;;   (if (find theme (custom-available-themes))
+;;       (load-theme theme t)))
 
-(safe-load 'zenburn)
-(safe-load 'Consolas)
+;; (safe-load 'zenburn)
+;; (safe-load 'Consolas)
 
 (winner-mode t)
 
@@ -197,8 +215,8 @@
   (setq ls-lisp-use-insert-directory-program nil)
   (require 'ls-lisp))
 
-(set-frame-height (selected-frame) 86)
-(set-frame-width (selected-frame) 118)
+;; (set-frame-height (selected-frame) 86)
+;; (set-frame-width (selected-frame) 118)
 
 (add-to-list 'desktop-path "~/.emacs.d/desktops")
 (desktop-save-mode 1)
