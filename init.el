@@ -18,7 +18,7 @@
                                   starter-kit-js starter-kit-lisp
                                   yaml-mode sass-mode
                                   rainbow-delimiters rainbow-mode
-                                  fill-column-indicator))
+                                  fill-column-indicator multi-term))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -111,6 +111,12 @@
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;
 (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only)
+
+;;;;;;;;;;;;;;;;;;;;
+;; Multi-term
+;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-c t") 'multi-term-next)
+(global-set-key (kbd "C-c T") 'multi-term)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Ruby
