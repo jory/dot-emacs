@@ -18,7 +18,8 @@
                                   starter-kit-js starter-kit-lisp
                                   yaml-mode sass-mode
                                   rainbow-delimiters rainbow-mode
-                                  fill-column-indicator multi-term))
+                                  fill-column-indicator multi-term coffee-mode
+                                  rinari))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -108,6 +109,10 @@
 (add-hook 'haml-mode-hook 'rainbow-delimiters-mode)
 
 ;;;;;;;;;;;;;;;;;;;;
+;; iBuffer
+;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;
 (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only)
@@ -115,8 +120,21 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; Multi-term
 ;;;;;;;;;;;;;;;;;;;;
+(require 'multi-term)
+
 (global-set-key (kbd "C-c t") 'multi-term-next)
-(global-set-key (kbd "C-c T") 'multi-term)
+(global-set-key (kbd "C-c C-t") 'multi-term)
+
+(defun map-term-line ()
+  (local-set-key (kbd "C-c C-j") 'term-line-mode))
+(add-hook 'term-mode-hook 'map-term-line)
+
+;; Multi-term was working without setting these explicitly, but
+;; suddenly started messing up the colours. I copied these from
+;; zenburn, but I don't want to have to. Investigate.
+(custom-set-variables
+     '(term-default-bg-color "#3f3f3f")
+     '(term-default-fg-color "#dcdccc"))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Ruby
