@@ -19,7 +19,7 @@
                                   yaml-mode sass-mode
                                   rainbow-delimiters rainbow-mode
                                   fill-column-indicator multi-term coffee-mode
-                                  rinari))
+                                  rinari handlebars-mode markdown-mode))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -50,8 +50,18 @@
 ;; Modes and Hooks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Minor modes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq abbrev-file-name "~/.emacs.d/abbrev_defs")
+(setq save-abbrevs t)
+(quietly-read-abbrev-file)
+(setq default-abbrev-mode t)
+
 (winner-mode t)
 (column-number-mode)
+(linum-mode)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Get the mouse working!
@@ -109,6 +119,11 @@
 (add-hook 'haml-mode-hook 'rainbow-delimiters-mode)
 
 ;;;;;;;;;;;;;;;;;;;;
+;; Handlebars
+;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.hbs$" . handlebars-mode))
+
+;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer
 ;;;;;;;;;;;;;;;;;;;;
 
@@ -116,6 +131,9 @@
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;
 (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only)
+
+(global-set-key (kbd "C-c m b") 'magit-blame-mode)
+(global-set-key (kbd "C-c m f l") 'magit-file-log)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Multi-term
