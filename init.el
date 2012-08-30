@@ -101,6 +101,8 @@
 (add-hook 'sass-mode-hook 'rainbow-mode)
 (add-hook 'sass-mode-hook 'rainbow-delimiters-mode)
 
+(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Dired
 ;;;;;;;;;;;;;;;;;;;;
