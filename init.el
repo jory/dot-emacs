@@ -37,7 +37,9 @@
 
 (server-start)
 
-(load-theme 'zenburn)
+(load-theme 'misterioso)
+
+;; TODO: Maybe turn off hl-line-mode?
 
 (when (eq system-type 'darwin)
   (require 'pbcopy)
@@ -148,13 +150,6 @@
 (defun map-term-line ()
   (local-set-key (kbd "C-c C-j") 'term-line-mode))
 (add-hook 'term-mode-hook 'map-term-line)
-
-;; Multi-term was working without setting these explicitly, but
-;; suddenly started messing up the colours. I copied these from
-;; zenburn, but I don't want to have to. Investigate.
-(custom-set-variables
-     '(term-default-bg-color "#3f3f3f")
-     '(term-default-fg-color "#dcdccc"))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Ruby
