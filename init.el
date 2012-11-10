@@ -19,7 +19,8 @@
                                   yaml-mode sass-mode
                                   rainbow-delimiters rainbow-mode
                                   fill-column-indicator multi-term coffee-mode
-                                  rinari handlebars-mode markdown-mode))
+                                  rinari handlebars-mode markdown-mode guru-mode
+                                  js2-mode))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -37,7 +38,7 @@
 
 (server-start)
 
-(load-theme 'misterioso)
+(load-theme 'zenburn)
 
 ;; TODO: Maybe turn off hl-line-mode?
 
@@ -65,6 +66,12 @@
 (column-number-mode)
 (linum-mode)
 
+(guru-global-mode)
+
+(setq enable-recursive-minibuffers t)
+
+(global-rainbow-delimiters-mode)
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Get the mouse working!
 ;;;;;;;;;;;;;;;;;;;;
@@ -75,6 +82,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; Hooks
 ;;;;;;;;;;;;;;;;;;;;
+
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (set-default 'tab-width 4)
@@ -101,7 +109,6 @@
 (add-hook 'css-mode-hook 'rainbow-mode)
 
 (add-hook 'sass-mode-hook 'rainbow-mode)
-(add-hook 'sass-mode-hook 'rainbow-delimiters-mode)
 
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 
@@ -130,6 +137,12 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; iBuffer
 ;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;
+;; JS2
+;;;;;;;;;;;;;;;;;;;;
+
+(setq js2-basic-offset 2)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Magit
@@ -175,6 +188,11 @@
       (visit-tags-table my-tags-file))))
 
 ;;;;;;;;;;;;;;;;;;;;
+;; Shell
+;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'auto-mode-alist '("\\.zsh$" . shell-script-mode))
+
+;;;;;;;;;;;;;;;;;;;;
 ;; YAML
 ;;;;;;;;;;;;;;;;;;;;
 (require 'yaml-mode)
@@ -196,3 +214,5 @@
 ;; Needed for iTerm, since Shift-Up sends <select>
 (global-set-key (kbd "<select>") 'windmove-up)
 
+(put 'ido-exit-minibuffer 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
